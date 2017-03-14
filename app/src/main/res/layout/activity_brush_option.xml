@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_brush_option"
     android:layout_width="match_parent"
@@ -10,4 +11,65 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bauandhornick.colorme.BrushOptionActivity">
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/paintbrush"
+        android:id="@+id/imageView"
+        android:layout_alignTop="@+id/imageView3"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/line"
+        android:id="@+id/imageView2"
+        android:layout_marginTop="81dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/rectangle"
+        android:id="@+id/imageView3"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Line"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:layout_above="@+id/imageView3"
+        android:layout_alignEnd="@+id/imageView2" />
+
+    <TextView
+        android:text="Rectangle"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:layout_above="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView3"
+        android:layout_alignStart="@+id/imageView3" />
+
+    <TextView
+        android:text="Freestyle"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:layout_above="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
 </RelativeLayout>
