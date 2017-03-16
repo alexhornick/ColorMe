@@ -25,13 +25,26 @@ public class ColorPickActivity extends AppCompatActivity {
         if(intent.hasExtra("color")){
             color=intent.getIntExtra("color",0);
         }
+
+        ImageView im = (ImageView) findViewById(R.id.color_imageView);
+        im.setColorFilter(color);
+
+        String text="#";
+        text= text+ Integer.toHexString(color);
+
+        if(text.length()>2)
+            text=text.charAt(0)+text.substring(3);
+        else
+            text="#000000";
+
         EditText et = (EditText) findViewById(R.id.rbg_editText);
-        et.setText(String.valueOf(color));
+        et.setText(text);
 
         Button b = (Button) findViewById(R.id.change_button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ImageView im = (ImageView) findViewById(R.id.color_imageView);
                 EditText et = (EditText) findViewById(R.id.rbg_editText);
                 try{

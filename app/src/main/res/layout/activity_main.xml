@@ -7,16 +7,24 @@
     android:fitsSystemWindows="true"
     tools:context="com.bauandhornick.colorme.MainActivity">
 
-    <com.bauandhornick.colorme.PaintObjectView
+   <!-- <com.bauandhornick.colorme.PaintObjectView
 
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/paint_object_view" />
-
+-->
     <android.support.design.widget.AppBarLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="387dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 
