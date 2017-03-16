@@ -22,8 +22,8 @@ public class PaintObjectView extends View {
     public PaintObjectView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
-    public void setup(){
+   
+    private void setup(AttributeSet attrs) {
 
     }
 
