@@ -3,6 +3,7 @@ package com.bauandhornick.colorme;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -51,6 +52,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float strokeWidth=0;
 
+
         for(int i=0;i<listOfObjects.getRectangles().size();i++){
          Integer temp = (Integer) listOfObjects.getColors()[0].get(i);
          color.setColor(temp);
@@ -71,10 +73,16 @@ public class PaintObjectView extends View implements View.OnTouchListener{
             canvas.drawLine(listOfObjects.getLines().get(i).getX()[0],listOfObjects.getLines().get(i).getY()[0],
                  listOfObjects.getLines().get(i).getX()[1],listOfObjects.getLines().get(i).getY()[1],color);
         }
-        for(int i=0;i<listOfObjects.getPoints().size();i++){
+        for(int i=0;i<listOfObjects.getCircle().size();i++){
          Integer temp = (Integer) listOfObjects.getColors()[2].get(i);
-         color.setColor(temp.intValue());
-         canvas.drawPoint(listOfObjects.getPoints().get(i).x,listOfObjects.getPoints().get(i).y,color);
+         color.setColor(temp);
+
+            temp = (Integer) listOfObjects.getThickness()[2].get(i);
+            strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,temp,dm);
+            color.setStrokeWidth(strokeWidth);
+
+         canvas.drawCircle(listOfObjects.getCircle().get(i).getCx(),listOfObjects.getCircle().get(i).getCy(),
+                 listOfObjects.getCircle().get(i).getRadius(),color);
         }
     }
 
@@ -91,6 +99,18 @@ public class PaintObjectView extends View implements View.OnTouchListener{
             case MotionEvent.ACTION_MOVE:
                 listOfObjects.setEndingPoint(0,(int)event.getX());
                 listOfObjects.setEndingPoint(1,(int)event.getY());
+
+                if(listOfObjects.getBrushType()==2){
+                    List<Circle> mylist = listOfObjects.getCircle();
+                    Circle myCircle = new Circle(listOfObjects.getEndingPoint(0),listOfObjects.getEndingPoint(1),listOfObjects.getCurrentThickness());
+                    mylist.add(myCircle);
+
+                    listOfObjects.getColors()[2].add(new Integer(listOfObjects.getCurrentColor()));
+                    listOfObjects.getThickness()[2].add(new Integer(listOfObjects.getCurrentThickness()));
+
+                    invalidate();
+
+                }
                 return true;
             case MotionEvent.ACTION_UP:
                 if(listOfObjects.drawMode.equals(ObjectsDrawn.Mode.DRAWING)) {

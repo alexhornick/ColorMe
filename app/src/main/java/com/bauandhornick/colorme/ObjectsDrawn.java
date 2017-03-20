@@ -2,6 +2,7 @@ package com.bauandhornick.colorme;
 
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.shapes.OvalShape;
 
 import java.util.List;
 import java.util.Vector;
@@ -13,9 +14,9 @@ import java.util.Vector;
 public class ObjectsDrawn {
     private List<Rect> rectangles;
     private List<Line> lines;
-    private List<Point> points;
-    private List [] colors;
+     private List [] colors;
     private List [] thickness;
+    private List<Circle> circles;
 
     private int currentColor;
     private int currentThickness;
@@ -41,12 +42,12 @@ public class ObjectsDrawn {
         this.lines = lines;
     }
 
-    public List<Point> getPoints() {
-        return points;
+    public List<Circle> getCircle() {
+        return circles;
     }
 
-    public void setPoints(List<Point> points) {
-        this.points = points;
+    public void setCircles(List<Circle> circles) {
+        this.circles = circles;
     }
 
     public List<Integer>[] getColors() {
@@ -112,7 +113,7 @@ public class ObjectsDrawn {
     public ObjectsDrawn() {
         rectangles = new Vector<Rect>();
         lines = new Vector<>();
-        points = new Vector<>();
+        circles = new Vector<>();
         startingPoint = new int[2];
         endingPoint = new int[2];
         tempEndingPoint = new int[2];
