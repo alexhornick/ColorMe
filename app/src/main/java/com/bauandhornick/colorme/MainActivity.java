@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    int color=0;
+    int myColor=0;
     int thickness=0;
+    int brushType=0;
+    PaintObjectView pov;
+
 
     enum startActivity{COLOR,BRUSH};
     @Override
@@ -24,20 +27,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
+        pov = (PaintObjectView) findViewById(R.id.paint_object_view);
+        pov.listOfObjects.setCurrentColor(myColor);
+        pov.listOfObjects.setCurrentThickness(thickness);
+        pov.listOfObjects.setBrushType(brushType);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -54,13 +53,14 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(id==R.id.action_color){
             Intent intent = new Intent(this,ColorPickActivity.class);
-            intent.putExtra("color",color);
+            intent.putExtra("color",myColor);
             startActivityForResult(intent,startActivity.COLOR.ordinal());
         }
         else if(id==R.id.action_brush){
 
-            Intent intent = new Intent(this,ColorPickActivity.class);
+            Intent intent = new Intent(this,BrushOptionActivity.class);
             intent.putExtra("thickness",thickness);
+            intent.putExtra("brushType",brushType);
             startActivityForResult(intent,startActivity.BRUSH.ordinal());
         }
         return super.onOptionsItemSelected(item);
@@ -72,7 +72,27 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode==startActivity.COLOR.ordinal()){
             if(resultCode==RESULT_OK){
                 if(data.hasExtra("color")){
-                  color= data.getIntExtra("color",0);
+                  myColor= data.getIntExtra("color",0);
+                  pov.listOfObjects.setCurrentColor(myColor);
+                    String text="#";
+                    text= text+ Integer.toHexString(myColor);
+                    if(text.length()>2)
+                        text=text.charAt(0)+text.substring(3);
+                    else
+                        text="#000000";
+                    Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        else if(requestCode==startActivity.BRUSH.ordinal()){
+            if(resultCode==RESULT_OK){
+                if(data.hasExtra("thickness")){
+                    thickness = data.getIntExtra("thickness",1);
+                    pov.listOfObjects.setCurrentThickness(thickness);
+                }
+                if(data.hasExtra("brushType")){
+                    brushType = data.getIntExtra("brushType",1);
+                    pov.listOfObjects.setBrushType(brushType);
                 }
             }
         }

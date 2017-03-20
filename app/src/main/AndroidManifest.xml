@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ColorPickActivity" />
-        <activity android:name=".BrushOptionActivity"></activity>
+        <activity android:name=".BrushOptionActivity"/>
     </application>
 
 </manifest>

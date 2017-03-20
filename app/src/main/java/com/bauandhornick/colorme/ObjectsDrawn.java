@@ -17,14 +17,105 @@ public class ObjectsDrawn {
     private List [] colors;
     private List [] thickness;
 
+    private int currentColor;
+    private int currentThickness;
+    private int brushType;
+
     enum Mode{DRAWING,ERASING};
 
-    private String whatToadd="line";
+    Mode drawMode = Mode.DRAWING;
+
+    public List<Rect> getRectangles() {
+        return rectangles;
+    }
+
+    public void setRectangles(List<Rect> rectangles) {
+        this.rectangles = rectangles;
+    }
+
+    public List<Line> getLines() {
+        return lines;
+    }
+
+    public void setLines(List<Line> lines) {
+        this.lines = lines;
+    }
+
+    public List<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
+    }
+
+    public List<Integer>[] getColors() {
+        return colors;
+    }
+
+    public void setColors(List[] colors) {
+        this.colors = colors;
+    }
+
+    public List[] getThickness() {
+        return thickness;
+    }
+
+    public void setThickness(List[] thickness) {
+        this.thickness = thickness;
+    }
+
+    public int getCurrentColor() {
+        return currentColor;
+    }
+
+    public void setCurrentColor(int currentColor) {
+        this.currentColor = currentColor;
+    }
+
+    public int getCurrentThickness() {
+        return currentThickness;
+    }
+
+    public void setCurrentThickness(int currentThickness) {
+        this.currentThickness = currentThickness;
+    }
+
+    public int getBrushType() {
+        return brushType;
+    }
+
+    public void setBrushType(int brushType) {
+        this.brushType = brushType;
+    }
+
+    public int getStartingPoint(int index) {
+        return startingPoint[index];
+    }
+
+    public void setStartingPoint(int index, int value) {
+        this.startingPoint[index] = value;
+    }
+
+    public int getEndingPoint(int index) {
+        return endingPoint[index];
+    }
+
+    public void setEndingPoint(int index, int value) {
+        this.endingPoint[index] = value;
+    }
+
+    private int [] startingPoint;
+    private int [] endingPoint;
+    private int [] tempEndingPoint;
 
     public ObjectsDrawn() {
         rectangles = new Vector<Rect>();
         lines = new Vector<>();
         points = new Vector<>();
+        startingPoint = new int[2];
+        endingPoint = new int[2];
+        tempEndingPoint = new int[2];
 
         colors = new List[3];
         thickness = new List[3];
@@ -35,28 +126,4 @@ public class ObjectsDrawn {
         }
     }
 
-    public List<Rect> getRectangles() {
-        return rectangles;
-    }
-
-    public List<Line> getLines() {
-        return lines;
-    }
-
-    public List<Point> getPoints() {
-        return points;
-    }
-
-    public List[] getColors() {
-        return colors;
-    }
-
-    public List[] getThickness() {
-        return thickness;
-    }
-
-    public String getWhatToadd() {
-        return whatToadd;
-    }
-
-}
+  }
