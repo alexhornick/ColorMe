@@ -15,15 +15,14 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:srcCompat="@drawable/paintbrush"
-        android:id="@+id/imageView"
-        android:layout_alignTop="@+id/imageView3"
-        android:layout_alignParentEnd="true" />
+        android:id="@+id/paintbrush"
+        android:layout_alignTop="@+id/line" />
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:srcCompat="@drawable/line"
-        android:id="@+id/imageView2"
+        android:id="@+id/line"
         android:layout_marginTop="81dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -32,9 +31,10 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:srcCompat="@drawable/rectangle"
-        android:id="@+id/imageView3"
-        android:layout_alignTop="@+id/imageView2"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/rectangle"
+        android:layout_alignTop="@+id/line"
+        android:layout_centerHorizontal="true"
+        />
 
     <TextView
         android:text="Line"
@@ -45,21 +45,21 @@
         android:fontFamily="casual"
         android:textSize="18sp"
         android:textStyle="normal|bold"
-        android:layout_above="@+id/imageView3"
-        android:layout_alignEnd="@+id/imageView2" />
+        android:layout_above="@+id/rectangle"
+        android:layout_alignEnd="@+id/line" />
 
     <TextView
         android:text="Rectangle"
         android:layout_width="150sp"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
+        android:id="@+id/textView4"
         android:textAlignment="center"
         android:fontFamily="casual"
         android:textSize="18sp"
         android:textStyle="normal|bold"
-        android:layout_above="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView3"
-        android:layout_alignStart="@+id/imageView3" />
+        android:layout_above="@+id/rectangle"
+        android:layout_alignEnd="@+id/rectangle"
+        android:layout_alignStart="@+id/rectangle" />
 
     <TextView
         android:text="Freestyle"
@@ -70,8 +70,20 @@
         android:fontFamily="casual"
         android:textSize="18sp"
         android:textStyle="normal|bold"
-        android:layout_above="@+id/imageView"
-        android:layout_alignStart="@+id/imageView" />
+        android:layout_above="@+id/line"
+        android:layout_alignStart="@+id/line" />
+
+    <TextView
+        android:text="Select One"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_alignParentTop="true" />
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,4 +92,11 @@
         android:id="@+id/seekBar"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
+
+    <com.skydoves.colorpickerview.ColorPickerView
+        android:id="@+id/colorPickerView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:src="@drawable/palette"
+        app:selector="@drawable/wheel" />
 </RelativeLayout>

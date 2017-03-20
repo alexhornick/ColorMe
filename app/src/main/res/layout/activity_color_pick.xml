@@ -31,6 +31,13 @@
         android:layout_below="@+id/color_imageView"
         android:gravity="center_vertical" />
 
+    <com.skydoves.colorpickerview.ColorPickerView
+        android:id="@+id/colorPickerView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:src="@drawable/palette"
+        app:selector="@drawable/wheel" />
+
     <EditText
         android:text="TextView"
         android:layout_width="100dp"
