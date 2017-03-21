@@ -11,68 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bauandhornick.colorme.BrushOptionActivity">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@drawable/paintbrush"
-        android:id="@+id/paintbrush"
-        android:layout_alignTop="@+id/line" />
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@drawable/line"
-        android:id="@+id/line"
-        android:layout_marginTop="81dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:srcCompat="@drawable/rectangle"
-        android:id="@+id/rectangle"
-        android:layout_alignTop="@+id/line"
-        android:layout_centerHorizontal="true"
-        />
-
-    <TextView
-        android:text="Line"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:textAlignment="center"
-        android:fontFamily="casual"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:layout_above="@+id/rectangle"
-        android:layout_alignEnd="@+id/line" />
-
-    <TextView
-        android:text="Rectangle"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:textAlignment="center"
-        android:fontFamily="casual"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:layout_above="@+id/rectangle"
-        android:layout_alignEnd="@+id/rectangle"
-        android:layout_alignStart="@+id/rectangle" />
-
-    <TextView
-        android:text="Freestyle"
-        android:layout_width="150sp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:textAlignment="center"
-        android:fontFamily="casual"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        android:layout_above="@+id/line"
-        android:layout_alignStart="@+id/line" />
-
     <TextView
         android:text="Select One"
         android:layout_width="150sp"
@@ -84,19 +22,79 @@
         android:textStyle="normal|bold"
         android:layout_toEndOf="@+id/textView2"
         android:layout_alignParentTop="true" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/line"
+        android:id="@+id/line"
+        android:layout_marginTop="78dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Line"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:layout_above="@+id/paintbrush"
+        android:layout_alignEnd="@+id/line" />
+
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="168dp"
         android:id="@+id/seekBar"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/rectangle"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="72dp"
+        android:layout_alignEnd="@+id/paintbrush" />
 
-    <com.skydoves.colorpickerview.ColorPickerView
-        android:id="@+id/colorPickerView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        app:src="@drawable/palette"
-        app:selector="@drawable/wheel" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/paintbrush"
+        android:id="@+id/paintbrush"
+        android:layout_alignTop="@+id/line"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/rectangle"
+        android:id="@+id/rectangle"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Freestyle"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:gravity="right|center_vertical"
+        android:layout_alignBaseline="@+id/textView4"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignEnd="@+id/paintbrush"
+        android:layout_toEndOf="@+id/rectangle" />
+
+    <TextView
+        android:text="Rectangle"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:textAlignment="center"
+        android:fontFamily="casual"
+        android:textSize="18sp"
+        android:textStyle="normal|bold"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
