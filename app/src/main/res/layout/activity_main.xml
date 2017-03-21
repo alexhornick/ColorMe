@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,4 +29,30 @@
         android:layout_height="match_parent"
         android:id="@+id/paint_object_view" />
 
-</android.support.design.widget.CoordinatorLayout>
+    <TextView
+        android:text="TextView"
+        android:layout_width="295dp"
+        android:layout_height="55dp"
+        android:id="@+id/textView6" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/radiobutton_off_background"
+        android:id="@+id/floatingActionButton"
+        app:layout_anchor="@+id/paint_object_view"
+        app:layout_anchorGravity="bottom|center_horizontal"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/textView6"
+        android:layout_above="@+id/floatingActionButton"
+        android:id="@+id/listView"
+        android:layout_below="@+id/textView6" />
+</RelativeLayout>

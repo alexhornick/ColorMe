@@ -1,14 +1,20 @@
 package com.bauandhornick.colorme;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     int thickness=0;
     int brushType=0;
     PaintObjectView pov;
-
 
     enum startActivity{COLOR,BRUSH};
     @Override
@@ -31,6 +36,33 @@ public class MainActivity extends AppCompatActivity {
         pov.listOfObjects.setCurrentColor(myColor);
         pov.listOfObjects.setCurrentThickness(thickness);
         pov.listOfObjects.setBrushType(brushType);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+
+                Dialog dialog = new Dialog(MainActivity.this);
+
+                dialog.setContentView(R.layout.activity_color_pick);
+                final ColorWheel cw =(ColorWheel) dialog.findViewById(R.id.colorView);
+                TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
+                ImageView im = (ImageView) dialog.findViewById(R.id.example);
+                cw.setOutput(tv,im);
+
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        myColor = cw.myColor;
+                        pov.listOfObjects.setCurrentColor(myColor);
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 
     @Override

@@ -95,6 +95,7 @@ public class ColorPickActivity extends AppCompatActivity {
 
                         ImageView im2 = (ImageView) findViewById(R.id.example);
                         im2.setColorFilter(myColor);
+                        return true;
                 }
                 return false;
             }
