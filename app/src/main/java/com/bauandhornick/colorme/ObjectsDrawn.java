@@ -1,5 +1,7 @@
 package com.bauandhornick.colorme;
 
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.shapes.OvalShape;
@@ -16,12 +18,13 @@ public class ObjectsDrawn {
     private List<Line> lines;
      private List [] colors;
     private List [] thickness;
-    private List<Circle> circles;
+    private List<Path> paths;
 
     private int currentColor;
     private int currentThickness;
     private int brushType;
 
+    Path tempPath;
     enum Mode{DRAWING,ERASING};
 
     Mode drawMode = Mode.DRAWING;
@@ -42,12 +45,12 @@ public class ObjectsDrawn {
         this.lines = lines;
     }
 
-    public List<Circle> getCircle() {
-        return circles;
+    public List<Path> getPath() {
+        return paths;
     }
 
-    public void setCircles(List<Circle> circles) {
-        this.circles = circles;
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
     }
 
     public List<Integer>[] getColors() {
@@ -87,6 +90,7 @@ public class ObjectsDrawn {
     }
 
     public void setBrushType(int brushType) {
+
         this.brushType = brushType;
     }
 
@@ -113,13 +117,14 @@ public class ObjectsDrawn {
     public ObjectsDrawn() {
         rectangles = new Vector<Rect>();
         lines = new Vector<>();
-        circles = new Vector<>();
+        paths = new Vector<>();
         startingPoint = new int[2];
         endingPoint = new int[2];
         tempEndingPoint = new int[2];
 
         colors = new List[3];
         thickness = new List[3];
+        tempPath = new Path();
 
         for (int i = 0; i < 3; i++) {
             colors[i] = new Vector<Integer>();

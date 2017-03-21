@@ -3,6 +3,7 @@ package com.bauandhornick.colorme;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -43,6 +44,10 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         color = new Paint();
         listOfObjects = new ObjectsDrawn();
         this.setOnTouchListener(this);
+        color.setAntiAlias(true);
+        color.setStyle(Paint.Style.STROKE);
+        color.setStrokeJoin(Paint.Join.ROUND);
+        color.setStrokeCap(Paint.Cap.ROUND);
     }
 
     @Override
@@ -52,7 +57,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float strokeWidth=0;
 
-
+        color.setStyle(Paint.Style.FILL);
         for(int i=0;i<listOfObjects.getRectangles().size();i++){
          Integer temp = (Integer) listOfObjects.getColors()[0].get(i);
          color.setColor(temp);
@@ -62,7 +67,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
 
             canvas.drawRect(listOfObjects.getRectangles().get(i),color);
         }
-
+        color.setStyle(Paint.Style.STROKE);
         for (int i = 0; i < listOfObjects.getLines().size(); i++) {
          Integer temp = listOfObjects.getColors()[1].get(i);
          color.setColor(temp);
@@ -73,7 +78,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
             canvas.drawLine(listOfObjects.getLines().get(i).getX()[0],listOfObjects.getLines().get(i).getY()[0],
                  listOfObjects.getLines().get(i).getX()[1],listOfObjects.getLines().get(i).getY()[1],color);
         }
-        for(int i=0;i<listOfObjects.getCircle().size();i++){
+        for(int i=0;i<listOfObjects.getPath().size();i++){
          Integer temp = (Integer) listOfObjects.getColors()[2].get(i);
          color.setColor(temp);
 
@@ -81,8 +86,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
             strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,temp,dm);
             color.setStrokeWidth(strokeWidth);
 
-         canvas.drawCircle(listOfObjects.getCircle().get(i).getCx(),listOfObjects.getCircle().get(i).getCy(),
-                 listOfObjects.getCircle().get(i).getRadius(),color);
+         canvas.drawPath(listOfObjects.getPath().get(i),color);
         }
     }
 
@@ -95,21 +99,35 @@ public class PaintObjectView extends View implements View.OnTouchListener{
 
                 listOfObjects.setEndingPoint(0,(int)event.getX());
                 listOfObjects.setEndingPoint(1,(int)event.getY());
+
+                if(listOfObjects.getBrushType()==2) {
+                listOfObjects.tempPath=new Path();
+                //listOfObjects.tempPath.setFillType(Path.FillType.WINDING);
+                listOfObjects.tempPath.moveTo(listOfObjects.getStartingPoint(0),listOfObjects.getStartingPoint(1));
+                    List<Path> mylist = listOfObjects.getPath();
+                    mylist.add(listOfObjects.tempPath);
+                    listOfObjects.getColors()[2].add(new Integer(listOfObjects.getCurrentColor()));
+                    listOfObjects.getThickness()[2].add(new Integer(listOfObjects.getCurrentThickness()));
+
+                }
                 return true;
             case MotionEvent.ACTION_MOVE:
                 listOfObjects.setEndingPoint(0,(int)event.getX());
                 listOfObjects.setEndingPoint(1,(int)event.getY());
 
                 if(listOfObjects.getBrushType()==2){
-                    List<Circle> mylist = listOfObjects.getCircle();
-                    Circle myCircle = new Circle(listOfObjects.getEndingPoint(0),listOfObjects.getEndingPoint(1),listOfObjects.getCurrentThickness());
-                    mylist.add(myCircle);
+                    listOfObjects.tempPath.lineTo(listOfObjects.getEndingPoint(0),listOfObjects.getEndingPoint(1));
+                //    listOfObjects.tempPath.moveTo(listOfObjects.getEndingPoint(0),listOfObjects.getEndingPoint(1));
+                    List<Path> mylist = listOfObjects.getPath();
+                    mylist.remove(mylist.size()-1);
+                    listOfObjects.getColors()[2].remove(listOfObjects.getColors()[2].size()-1);
+                    listOfObjects.getThickness()[2].remove(listOfObjects.getThickness()[2].size()-1);
 
+                    mylist.add(listOfObjects.tempPath);
                     listOfObjects.getColors()[2].add(new Integer(listOfObjects.getCurrentColor()));
                     listOfObjects.getThickness()[2].add(new Integer(listOfObjects.getCurrentThickness()));
 
                     invalidate();
-
                 }
                 return true;
             case MotionEvent.ACTION_UP:
@@ -162,7 +180,20 @@ public class PaintObjectView extends View implements View.OnTouchListener{
 
                         invalidate();
                     }
-                }
+
+                else if(listOfObjects.getBrushType()==2) {
+                        List<Path> mylist = listOfObjects.getPath();
+
+
+                        mylist.add(listOfObjects.tempPath);
+                        //listOfObjects.tempPath = null;
+
+                        listOfObjects.getColors()[2].add(new Integer(listOfObjects.getCurrentColor()));
+                        listOfObjects.getThickness()[2].add(new Integer(listOfObjects.getCurrentThickness()));
+
+                        invalidate();
+
+                    }}
                 return true;
         }
         return false;
