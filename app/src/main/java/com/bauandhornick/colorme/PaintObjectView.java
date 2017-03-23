@@ -59,7 +59,6 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         color.setStyle(Paint.Style.STROKE);
         color.setStrokeJoin(Paint.Join.ROUND);
         color.setStrokeCap(Paint.Cap.ROUND);
-
     }
 
     @Override

@@ -243,6 +243,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.putExtra("brushType",brushType);
             startActivityForResult(intent,startActivity.BRUSH.ordinal());
         }
+        else if(id==R.id.action_about)
+        {
+            Dialog dialog = new Dialog(MainActivity.this);
+            dialog.setContentView(R.layout.activity_about);
+            dialog.show();
+        }
         return super.onOptionsItemSelected(item);
     }
 
