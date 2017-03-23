@@ -36,7 +36,7 @@
         android:id="@+id/colorView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@drawable/colorwheel3"
+        android:src="@drawable/palette"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"/>
     <TextView

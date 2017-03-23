@@ -28,10 +28,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     int myColor=0;
+    int myColorOverlay=0;
     int thickness=0;
     int brushType=0;
     PaintObjectView pov;
-    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon};
+    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon, R.id.color_filter};
     boolean display=false;
     boolean eraserMode = false;
     int pastSelected=0;
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     pov.listOfObjects.setCurrentColor(myColor);
                 }
             });
+
             dialog.show();
         }
         else if(v.getId() == R.id.eraserIcon)
@@ -186,6 +188,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     pov.listOfObjects.setBrushType(brushType);
                 }
             });
+            dialog.show();
+
+        }
+
+        else if(v.getId()==R.id.color_filter) {
+            Dialog dialog = new Dialog(MainActivity.this);
+            dialog.setContentView(R.layout.activity_color_filter);
+
+            final ColorWheel cwo = (ColorWheel) dialog.findViewById(R.id.colorView);
+            TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
+            ImageView im = (ImageView) dialog.findViewById(R.id.example);
+            cwo.setOutput(tv, im);
+
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    myColorOverlay = cwo.myColor;
+                    pov.setColorOverlay(myColorOverlay);
+                }
+            });
+
             dialog.show();
 
         }
