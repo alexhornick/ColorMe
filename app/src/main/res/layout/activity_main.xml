@@ -53,16 +53,6 @@
         android:src="@drawable/brushicon" />
 
     <ImageView
-        app:srcCompat="@drawable/palette"
-        android:id="@+id/colorWheel_imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/colorfab"
-        android:layout_above="@+id/brush_imageView"
-        android:layout_alignParentEnd="true" />
-
-    <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:srcCompat="@drawable/eraser_off"
@@ -70,5 +60,24 @@
         android:id="@+id/eraserIcon"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
+
+    <ImageView
+        app:srcCompat="@drawable/palette"
+        android:id="@+id/colorWheel_imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="81dp"
+        android:src="@drawable/colorfab"
+        android:layout_above="@+id/brush_imageView"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/color_filter_icon"
+        android:id="@+id/color_filter"
+        android:layout_above="@+id/brush_imageView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp" />
 
 </RelativeLayout>
