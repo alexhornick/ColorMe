@@ -1,5 +1,6 @@
 package com.bauandhornick.colorme;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,8 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int thickness=0;
     int brushType=0;
     PaintObjectView pov;
-    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView};
+    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon};
     boolean display=false;
+    boolean eraserMode = false;
     int pastSelected=0;
     protected int brushList[] = {R.id.rectangle,R.id.line,R.id.paintbrush};
 
@@ -41,7 +43,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setLogo(R.drawable.logo);
+        toolbar.setPadding(0, 20, 0, 30); //set top, bottom padding for toolbar
         setSupportActionBar(toolbar);
+
 
         pov = (PaintObjectView) findViewById(R.id.paint_object_view);
         pov.listOfObjects.setCurrentColor(myColor);
@@ -80,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         }});
+
+
     }
 
     @Override
@@ -103,7 +110,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             dialog.show();
         }
-    else if(v.getId()==R.id.brush_imageView){
+        else if(v.getId() == R.id.eraserIcon)
+        {
+            ImageView im = (ImageView) findViewById(R.id.eraserIcon);
+
+            if(eraserMode) {
+                im.setImageResource(R.drawable.eraser_off);
+                eraserMode = false;
+            }
+            else {
+                im.setImageResource(R.drawable.eraser_on);
+                eraserMode = true;
+            }
+        }
+        else if(v.getId()==R.id.brush_imageView){
             final Dialog dialog = new Dialog(MainActivity.this);
 
             dialog.setContentView(R.layout.activity_brush_option);

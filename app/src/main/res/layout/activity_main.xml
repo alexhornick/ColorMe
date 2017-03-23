@@ -8,7 +8,7 @@
     tools:context="com.bauandhornick.colorme.MainActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -16,9 +16,9 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="387dp"
+            android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#000000"
+            android:background="#11051b"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -49,15 +49,26 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="31dp"
         android:layout_width="50dp"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:src="@drawable/brushicon" />
 
     <ImageView
-        app:srcCompat="@drawable/colorwheel2"
+        app:srcCompat="@drawable/palette"
         android:id="@+id/colorWheel_imageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/colorfab"
         android:layout_above="@+id/brush_imageView"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/eraser_off"
+        android:layout_marginBottom="12dp"
+        android:id="@+id/eraserIcon"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
