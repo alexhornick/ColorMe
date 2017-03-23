@@ -3,4 +3,12 @@
     <string name="action_settings">Settings</string>
     <string name="action_color">Color</string>
     <string name="action_brush">Brush</string>
+    <string name="action_about">About</string>
+    <string name="about_text">Developed by Thomas Bau and Alex Hornick.</string>
+    <string name="app_descript">This is a painting app where you can draw with lines, rectangles, and freestyle! You can select different colors, line thickness, and even a color filter. You can also erase any mistakes using the eraser.</string>
+    <string name="logo_credits">
+            Logo Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a> by Alex Hornick\n
+            Circle graphic by <a href="http://www.flaticon.com/authors/madebyoliver">Madebyoliver</a> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>\n
+            Remove graphic by <a href="http://www.flaticon.com/authors/pixel-perfect">Pixel perfect</a> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>\n
+            File graphic by <a href="http://www.flaticon.com/authors/roundicons">Roundicons</a> from <a href="http://www.flaticon.com/">Flaticon</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a></string>\n
 </resources>

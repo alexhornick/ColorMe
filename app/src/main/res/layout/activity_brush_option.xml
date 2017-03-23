@@ -84,4 +84,15 @@
         android:layout_above="@+id/paintbrush"
         android:layout_toEndOf="@+id/textView4" />
 
+    <TextView
+        android:text="Thickness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="35dp"
+        android:id="@+id/textView7"
+        android:fontFamily="casual"
+        android:textSize="18sp" />
+
 </RelativeLayout>
