@@ -13,16 +13,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     int myColor=0;
     int thickness=0;
     int brushType=0;
     PaintObjectView pov;
+    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView};
+    boolean display=false;
+    int pastSelected=0;
+    protected int brushList[] = {R.id.rectangle,R.id.line,R.id.paintbrush};
 
     enum startActivity{COLOR,BRUSH};
     @Override
@@ -37,34 +48,128 @@ public class MainActivity extends AppCompatActivity {
         pov.listOfObjects.setCurrentThickness(thickness);
         pov.listOfObjects.setBrushType(brushType);
 
+        ImageView temp;
+        for(int images:imageList){
+            temp = (ImageView) findViewById(images);
+            temp.setVisibility(View.INVISIBLE);
+            temp.setOnClickListener(MainActivity.this);
+        }
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-
-
-                Dialog dialog = new Dialog(MainActivity.this);
-
-                dialog.setContentView(R.layout.activity_color_pick);
-                final ColorWheel cw =(ColorWheel) dialog.findViewById(R.id.colorView);
-                TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
-                ImageView im = (ImageView) dialog.findViewById(R.id.example);
-                cw.setOutput(tv,im);
-
-                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        myColor = cw.myColor;
-                        pov.listOfObjects.setCurrentColor(myColor);
-                    }
-                });
-                dialog.show();
+            if(display==false){
+                ImageView temp;
+                for(int images:imageList){
+                    temp = (ImageView) findViewById(images);
+                    temp.setVisibility(View.VISIBLE);
+                display=true;
+                }
             }
-        });
+            else
+            {
+                ImageView temp;
+                for(int images:imageList){
+                    temp = (ImageView) findViewById(images);
+                    temp.setVisibility(View.INVISIBLE);
+                    display=false;
+                }
+
+            }
+        }});
     }
 
+    @Override
+    public void onClick(View v) {
+
+        if(v.getId()==R.id.colorWheel_imageView) {
+            Dialog dialog = new Dialog(MainActivity.this);
+
+            dialog.setContentView(R.layout.activity_color_pick);
+            final ColorWheel cw = (ColorWheel) dialog.findViewById(R.id.colorView);
+            TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
+            ImageView im = (ImageView) dialog.findViewById(R.id.example);
+            cw.setOutput(tv, im);
+
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    myColor = cw.myColor;
+                    pov.listOfObjects.setCurrentColor(myColor);
+                }
+            });
+            dialog.show();
+        }
+    else if(v.getId()==R.id.brush_imageView){
+            final Dialog dialog = new Dialog(MainActivity.this);
+
+            dialog.setContentView(R.layout.activity_brush_option);
+
+            SeekBar seek = (SeekBar) dialog.findViewById(R.id.seekBar);
+            seek.setMax(20);
+
+            seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(getApplicationContext(),String.valueOf(thickness),Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                    // TODO Auto-generated method stub
+                    thickness=progress;
+                }
+            });
+
+            ImageView im = (ImageView) dialog.findViewById(R.id.line);
+            im.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setBrushType(dialog, 1);
+                }
+            });
+            im.setColorFilter(0xff000000);
+
+            im = (ImageView) dialog.findViewById(R.id.rectangle);
+            im.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setBrushType(dialog, 0);
+                }
+            });
+            im.setColorFilter(0xff000000);
+
+            im = (ImageView) dialog.findViewById(R.id.paintbrush);
+            im.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setBrushType(dialog,2);
+                }
+            });
+            im.setColorFilter(0xff000000);
+
+
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    pov.listOfObjects.setCurrentThickness(thickness);
+                    pov.listOfObjects.setBrushType(brushType);
+                }
+            });
+            dialog.show();
+
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -128,5 +233,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+    private void setBrushType(Dialog dialog,int brush)
+    {
+        brushType = brush;
+        ImageView im = (ImageView) dialog.findViewById(brushList[brush]);
+        im.setColorFilter(0xff666666);
+
+        if(pastSelected!=brush){
+            im = (ImageView) dialog.findViewById(brushList[pastSelected]);
+            im.setColorFilter(0xff000000);}
+        pastSelected=brush;
     }
 }
