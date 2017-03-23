@@ -35,7 +35,7 @@ public class ColorWheel extends ImageView  {
 
     public void setUp(){
         final ImageView im = (ImageView) this;
-        im.setImageResource(R.drawable.colorwheel3);
+        im.setImageResource(R.drawable.palette);
         im.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
