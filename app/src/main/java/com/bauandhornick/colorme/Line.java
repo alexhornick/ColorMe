@@ -39,4 +39,9 @@ public class Line {
         y[1]=y2;
     }
 
-}
+    public void set(float x1, float y1, float x2, float y2){
+        x[0] = x1;
+        x[1] = x2;
+        y[0]=y1;
+        y[1]=y2;
+}}

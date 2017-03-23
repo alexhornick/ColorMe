@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.shapes.OvalShape;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -16,15 +17,20 @@ import java.util.Vector;
 public class ObjectsDrawn {
     private List<Rect> rectangles;
     private List<Line> lines;
-     private List [] colors;
+    private List [] colors;
     private List [] thickness;
     private List<Path> paths;
 
+    private List<String> pastActions;
     private int currentColor;
     private int currentThickness;
     private int brushType;
 
     Path tempPath;
+    Line tempLine;
+    Rect tempRect;
+
+
     enum Mode{DRAWING,ERASING};
 
     Mode drawMode = Mode.DRAWING;
@@ -115,20 +121,20 @@ public class ObjectsDrawn {
     private int [] tempEndingPoint;
 
     public ObjectsDrawn() {
-        rectangles = new Vector<Rect>();
-        lines = new Vector<>();
-        paths = new Vector<>();
+        rectangles = new ArrayList<>();
+        lines = new ArrayList<>();
+        paths = new ArrayList<>();
         startingPoint = new int[2];
         endingPoint = new int[2];
         tempEndingPoint = new int[2];
 
         colors = new List[3];
         thickness = new List[3];
-        tempPath = new Path();
+        pastActions = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            colors[i] = new Vector<Integer>();
-            thickness[i] = new Vector<Float>();
+            colors[i] = new ArrayList();
+            thickness[i] = new ArrayList();
         }
     }
 
