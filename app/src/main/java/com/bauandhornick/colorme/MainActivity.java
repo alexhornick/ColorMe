@@ -3,6 +3,7 @@ package com.bauandhornick.colorme;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -17,11 +18,13 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    int myColor=0;
+    int myColor= Color.BLACK;
     int myColorOverlay=0;
-    int myBackground = 0;
-    int thickness=0;
-    int brushType=0;
+
+    int myBackground = Color.WHITE;
+    int thickness=4;
+    int brushType=2;
+
     PaintObjectView pov;
     int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon,R.id.clear, R.id.color_filter, R.id.fill_background, R.id.undo};
     boolean display=false;
@@ -77,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         }});
-
-
     }
 
     @Override
@@ -91,7 +92,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final ColorWheel cw = (ColorWheel) dialog.findViewById(R.id.colorView);
             TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
             ImageView im = (ImageView) dialog.findViewById(R.id.example);
-            cw.setOutput(tv, im);
+            cw.setOutput(tv, im,myColor);
+
+            tv = (TextView) dialog.findViewById(R.id.title_textView);
+            tv.setText("Brush Color");
 
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
@@ -110,10 +114,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(eraserMode) {
                 im.setImageResource(R.drawable.eraser_off);
                 eraserMode = false;
+                pov.listOfObjects.drawMode= ObjectsDrawn.Mode.DRAWING;
             }
             else {
                 im.setImageResource(R.drawable.eraser_on);
                 eraserMode = true;
+
+                pov.listOfObjects.drawMode= ObjectsDrawn.Mode.ERASING;
             }
         }
         else if (v.getId()==R.id.brush_imageView){
@@ -124,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             SeekBar seek = (SeekBar) dialog.findViewById(R.id.seekBar);
             seek.setMax(20);
 
+            seek.setProgress(thickness);
             seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
                 @Override
@@ -151,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     setBrushType(dialog, 1);
                 }
             });
+
             im.setColorFilter(0xff000000);
 
             im = (ImageView) dialog.findViewById(R.id.rectangle);
@@ -171,6 +180,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             im.setColorFilter(0xff000000);
 
+
+            setBrushType(dialog,brushType);
 
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
@@ -207,18 +218,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(v.getId()==R.id.color_filter) {
             Dialog dialog = new Dialog(MainActivity.this);
-            dialog.setContentView(R.layout.activity_color_filter);
+            dialog.setContentView(R.layout.activity_color_pick);
 
             final ColorWheel cwo = (ColorWheel) dialog.findViewById(R.id.colorView);
             TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
             ImageView im = (ImageView) dialog.findViewById(R.id.example);
-            cwo.setOutput(tv, im);
+            cwo.setOutput(tv, im,myColor);
+            tv = (TextView) dialog.findViewById(R.id.title_textView);
+            tv.setText("Color filter");
 
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     myColorOverlay = cwo.myColor;
                     pov.setColorOverlay(myColorOverlay);
+                    pov.invalidate();
                 }
             });
 

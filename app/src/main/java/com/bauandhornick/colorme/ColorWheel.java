@@ -35,7 +35,6 @@ public class ColorWheel extends ImageView  {
 
     public void setUp(){
         final ImageView im = (ImageView) this;
-        im.setImageResource(R.drawable.palette);
         im.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -72,9 +71,21 @@ public class ColorWheel extends ImageView  {
 
        });
 
+
     }
-public void setOutput(TextView tv,ImageView im){
+public void setOutput(TextView tv,ImageView im,int color){
     this.tv = tv;
     this.im2 = im;
+    this.myColor=color;
+
+    String text = "#";
+    text = text + Integer.toHexString(myColor);
+    if (text.length() > 2)
+        text = text.charAt(0) + text.substring(3);
+    else
+        text = "#000000";
+    tv.setText(text);
+
+    im2.setColorFilter(myColor);
 }}
 

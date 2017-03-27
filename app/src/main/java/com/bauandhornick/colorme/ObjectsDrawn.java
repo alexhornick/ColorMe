@@ -21,12 +21,31 @@ public class ObjectsDrawn {
     private List [] thickness;
     private List<Path> paths;
 
+    public List<Path> getErasePaths() {
+        return erasePaths;
+    }
+
+    public void setErasePaths(List<Path> erasePaths) {
+        this.erasePaths = erasePaths;
+    }
+
+    private List<Path> erasePaths;
+
+    public List<String> getPastActions() {
+        return pastActions;
+    }
+
+    public void setPastActions(List<String> pastActions) {
+        this.pastActions = pastActions;
+    }
+
     private List<String> pastActions;
     private int currentColor;
     private int currentThickness;
     private int brushType;
 
     Path tempPath;
+    Path tempErasePath;
     Line tempLine;
     Rect tempRect;
 
@@ -129,13 +148,15 @@ public class ObjectsDrawn {
         tempEndingPoint = new int[2];
 
         colors = new List[3];
-        thickness = new List[3];
+        thickness = new List[4];
         pastActions = new ArrayList<>();
+        erasePaths = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
             colors[i] = new ArrayList();
             thickness[i] = new ArrayList();
         }
+        thickness[3]=new ArrayList();
     }
 
   }
