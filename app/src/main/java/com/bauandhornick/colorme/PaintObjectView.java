@@ -2,6 +2,7 @@ package com.bauandhornick.colorme;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -289,11 +290,46 @@ public class PaintObjectView extends View implements View.OnTouchListener{
     public void setColorOverlay(int colorOverlay) { this.colorOverlay = colorOverlay; }
     public void setBackground(int background) { this.background = background; }
     public void clear(){
-
+        background = Color.WHITE;
+        listOfObjects.getLines().clear();
+        listOfObjects.getRectangles().clear();
+        listOfObjects.getPath().clear();
+        listOfObjects.getErasePaths().clear();
+        listOfObjects.getPastActions().clear();
+        invalidate();
     }
     public void undo(){
+        int size = listOfObjects.getPastActions().size();
+
+        //Make sure to not call undo when canvas is empty.
+        if(size > 0) {
+            String pastAction = listOfObjects.getPastActions().get(size - 1);
+
+            if (pastAction.equals("0")) {
+                listOfObjects.getThickness()[0].remove(listOfObjects.getThickness()[0].size() - 1);
+                listOfObjects.getColors()[0].remove(listOfObjects.getColors()[0].size() - 1);
+                listOfObjects.getRectangles().remove(listOfObjects.getRectangles().size() - 1);
+            } else if (pastAction.equals("1")) {
+                listOfObjects.getThickness()[1].remove(listOfObjects.getThickness()[1].size() - 1);
+                listOfObjects.getColors()[1].remove(listOfObjects.getColors()[1].size() - 1);
+                listOfObjects.getLines().remove(listOfObjects.getLines().size() - 1);
+
+            } else if (pastAction.equals("2")) {
+                listOfObjects.getThickness()[2].remove(listOfObjects.getThickness()[2].size() - 1);
+                listOfObjects.getColors()[2].remove(listOfObjects.getColors()[2].size() - 1);
+                listOfObjects.getPath().remove(listOfObjects.getPath().size() - 1);
+
+            } else if (pastAction.equals("3")) {
+                listOfObjects.getThickness()[3].remove(listOfObjects.getThickness()[3].size() - 1);
+                listOfObjects.getErasePaths().remove(listOfObjects.getErasePaths().size() - 1);
+            }
+
+            listOfObjects.getPastActions().remove(listOfObjects.getPastActions().size() - 1);
+            invalidate();
+        }
 
     }
+
 
 
 }

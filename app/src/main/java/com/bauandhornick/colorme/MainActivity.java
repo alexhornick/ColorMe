@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     enum startActivity{COLOR,BRUSH};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -202,8 +205,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final ColorWheel cwo = (ColorWheel) dialog.findViewById(R.id.colorView);
             TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
             ImageView im = (ImageView) dialog.findViewById(R.id.example);
-            cwo.setOutput(tv, im,myBackground);
+            tv = (TextView) dialog.findViewById(R.id.title_textView);
+            tv.setText("Background Color");
+            cwo.setOutput(tv, im, myBackground);
 
+          
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {

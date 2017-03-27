@@ -64,7 +64,8 @@
         android:layout_marginBottom="12dp"
         android:id="@+id/eraserIcon"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/eraser_off"/>
 
     <ImageView
         app:srcCompat="@drawable/colorwheelicon"
@@ -83,7 +84,8 @@
         android:id="@+id/fill_background"
         android:layout_above="@+id/colorWheel_imageView"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="19dp" />
+        android:layout_marginBottom="19dp"
+        android:src="@drawable/paintbucket"/>
 
     <ImageView
         android:layout_width="40dp"
@@ -92,7 +94,8 @@
         android:id="@+id/undo"
         android:layout_marginBottom="32dp"
         android:layout_above="@+id/clear"
-        android:layout_alignStart="@+id/clear" />
+        android:layout_alignStart="@+id/clear"
+        android:src="@drawable/undo"/>
 
     <ImageView
         android:layout_width="50dp"
@@ -101,7 +104,8 @@
         android:id="@+id/color_filter"
         android:layout_marginBottom="16dp"
         android:layout_above="@+id/brush_imageView"
-        android:layout_alignStart="@+id/brush_imageView" />
+        android:layout_alignStart="@+id/brush_imageView"
+        android:src="@drawable/color_filter_icon"/>
 
     <ImageView
         android:layout_width="40dp"
@@ -110,6 +114,7 @@
         android:id="@+id/clear"
         android:layout_above="@+id/fill_background"
         android:layout_alignStart="@+id/fill_background"
-        android:layout_marginBottom="18dp" />
+        android:layout_marginBottom="18dp"
+        android:src="@drawable/clear"/>
 
 </RelativeLayout>
