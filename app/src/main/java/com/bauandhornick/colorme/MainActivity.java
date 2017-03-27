@@ -11,13 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /*
 Features:
@@ -89,13 +87,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int brushType=2;
 
     PaintObjectView pov;
-    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon,R.id.clear, R.id.color_filter, R.id.fill_background, R.id.undo};
+    final int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon,R.id.clear, R.id.color_filter, R.id.fill_background, R.id.undo};
     boolean display=false;
     boolean eraserMode = false;
     int pastSelected=0;
-    protected int brushList[] = {R.id.rectangle,R.id.line,R.id.paintbrush};
+    protected final int[] brushList = {R.id.rectangle,R.id.line,R.id.paintbrush};
 
-    enum startActivity{COLOR,BRUSH};
+    enum startActivity{COLOR,BRUSH}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -125,25 +123,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
 
-            if(display==false){
-                ImageView temp;
-                for(int images:imageList){
-                    temp = (ImageView) findViewById(images);
-                    temp.setVisibility(View.VISIBLE);
-                display=true;
+                if(!display){
+                    ImageView temp;
+                    for(int images:imageList){
+                        temp = (ImageView) findViewById(images);
+                        temp.setVisibility(View.VISIBLE);
+                        display=true;
+                    }
                 }
-            }
-            else
-            {
-                ImageView temp;
-                for(int images:imageList){
-                    temp = (ImageView) findViewById(images);
-                    temp.setVisibility(View.INVISIBLE);
-                    display=false;
-                }
+                else
+                {
+                    ImageView temp;
+                    for(int images:imageList){
+                        temp = (ImageView) findViewById(images);
+                        temp.setVisibility(View.INVISIBLE);
+                        display=false;
+                    }
 
-            }
-        }});
+                }
+            }});
     }
 
     @Override

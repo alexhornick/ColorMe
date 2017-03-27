@@ -1,14 +1,9 @@
 package com.bauandhornick.colorme;
 
-import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.shapes.OvalShape;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by Thomas on 3/16/2017.
@@ -50,7 +45,7 @@ public class ObjectsDrawn {
     Rect tempRect;
 
 
-    enum Mode{DRAWING,ERASING};
+    enum Mode{DRAWING,ERASING}
 
     Mode drawMode = Mode.DRAWING;
 
@@ -159,4 +154,4 @@ public class ObjectsDrawn {
         thickness[3]=new ArrayList();
     }
 
-  }
+}
