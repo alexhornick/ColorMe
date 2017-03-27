@@ -115,7 +115,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
             color.setColor(listOfObjects.getColors()[2].get(i)|colorOverlay);
         }else if(index.equals("3")) {
             temp = (Integer) listOfObjects.getThickness()[3].get(i);
-            color.setColor(0xffffffff);
+            color.setColor(background);
         }
 
         strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,temp,dm);
