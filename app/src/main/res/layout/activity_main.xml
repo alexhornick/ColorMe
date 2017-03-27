@@ -89,19 +89,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:srcCompat="@drawable/undo"
-        android:layout_marginBottom="19dp"
         android:id="@+id/undo"
-        android:layout_above="@+id/fill_background"
-        android:layout_alignStart="@+id/fill_background" />
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:srcCompat="@drawable/clear"
-        android:id="@+id/clear"
         android:layout_marginBottom="32dp"
-        android:layout_above="@+id/undo"
-        android:layout_alignStart="@+id/undo" />
+        android:layout_above="@+id/clear"
+        android:layout_alignStart="@+id/clear" />
 
     <ImageView
         android:layout_width="50dp"
@@ -111,5 +102,14 @@
         android:layout_marginBottom="16dp"
         android:layout_above="@+id/brush_imageView"
         android:layout_alignStart="@+id/brush_imageView" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/clear"
+        android:id="@+id/clear"
+        android:layout_above="@+id/fill_background"
+        android:layout_alignStart="@+id/fill_background"
+        android:layout_marginBottom="18dp" />
 
 </RelativeLayout>
