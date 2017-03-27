@@ -79,7 +79,10 @@ public void setOutput(TextView tv, ImageView im, Button b, int color) {
 }
 
     public void onClick(View v) {
-        myColor = Color.BLACK;
+        if(myColor==Color.BLACK)
+            myColor = Color.WHITE;
+        else
+            myColor=Color.BLACK;
         setColorOutput();
     }
 
@@ -87,6 +90,7 @@ public void setOutput(TextView tv, ImageView im, Button b, int color) {
     {
         String text = "#";
         text = text + Integer.toHexString(myColor);
+
         if (text.length() > 2)
             text = text.charAt(0) + text.substring(3);
         else

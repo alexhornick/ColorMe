@@ -296,6 +296,13 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         listOfObjects.getPath().clear();
         listOfObjects.getErasePaths().clear();
         listOfObjects.getPastActions().clear();
+
+        for(int i=0;i<4;i++)
+            listOfObjects.getThickness()[i].clear();
+
+        for(int i=0;i<3;i++)
+            listOfObjects.getColors()[i].clear();
+
         invalidate();
     }
     public void undo(){

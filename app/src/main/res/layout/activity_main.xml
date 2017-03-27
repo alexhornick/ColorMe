@@ -115,6 +115,7 @@
         android:layout_above="@+id/fill_background"
         android:layout_alignStart="@+id/fill_background"
         android:layout_marginBottom="18dp"
-        android:src="@drawable/clear"/>
+        android:src="@drawable/clear"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

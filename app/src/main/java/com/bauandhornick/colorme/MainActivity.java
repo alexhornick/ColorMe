@@ -19,6 +19,66 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
+Features:
+
+Color filter:
+    Variables:
+        int myColorOverlay in MainActivity
+        int colorOverlay in PaintObjectView
+    Methods:
+        OnClick in MainActivity under R.id.color_filter
+        Creates dialog that uses activity_color_pick.xml to
+        pick color
+        onDraw in PaintObjectView
+
+Clear button:
+     Variables:
+        clears all of the lists in the ObjectsDrawn object
+        in PaintObjectView
+     Methods
+        OnClick in MainActivity under R.id.clear
+        clear in PaintObjectView
+
+Undo button:
+       Variables:
+         List<String> pastActions in ObjectsDrawn
+         all of the lists in the ObjectsDrawn object
+         in PaintObjectView
+       Methods:
+         OnClick in MainActivity under R.id.undo
+         undo in PaintObjectView
+
+Fill background:
+       Variables:
+         int myBackground in MainActivity
+         int background in PaintObjectView
+       Methods:
+         OnClick in MainActivity under R.id.fill_background
+         Creates dialog that uses activity_color_pick.xml to
+         pick color
+         setBackground in PaintObjectView
+
+Freestyle:
+       Variables:
+          Path tempPath
+          List<Path> Paths
+       Methods:
+          onTouch in PaintObjectView
+          onDraw in PaintObjectView
+
+Eraser:
+       Variables:
+          boolean eraserMode in MainActivity
+          Mode drawMode in ObjectsDrawn
+          Path tempErasePath
+          List<Path> erasePaths
+       Methods:
+          onClick in MainActivity under R.id.eraserIcon
+          onTouch in PaintObjectView
+          onDraw in PaintObjectView
+ */
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     int myColor= Color.BLACK;
@@ -142,7 +202,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
                     // TODO Auto-generated method stub
-                    Toast.makeText(getApplicationContext(),String.valueOf(thickness),Toast.LENGTH_LONG).show();
                 }
 
                 @Override
@@ -274,23 +333,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if(id==R.id.action_color){
-            Intent intent = new Intent(this,ColorPickActivity.class);
-            intent.putExtra("color",myColor);
-            startActivityForResult(intent,startActivity.COLOR.ordinal());
-        }
-        else if(id==R.id.action_brush){
-
-            Intent intent = new Intent(this,BrushOptionActivity.class);
-            intent.putExtra("thickness",thickness);
-            intent.putExtra("brushType",brushType);
-            startActivityForResult(intent,startActivity.BRUSH.ordinal());
-        }
-        else if(id==R.id.action_about)
+        if(id==R.id.action_about)
         {
             Intent intent = new Intent(this,AboutActivity.class);
             startActivity(intent);
@@ -298,37 +341,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==startActivity.COLOR.ordinal()){
-            if(resultCode==RESULT_OK){
-                if(data.hasExtra("color")){
-                  myColor= data.getIntExtra("color",0);
-                  pov.listOfObjects.setCurrentColor(myColor);
-                    String text="#";
-                    text= text+ Integer.toHexString(myColor);
-                    if(text.length()>2)
-                        text=text.charAt(0)+text.substring(3);
-                    else
-                        text="#000000";
-                    Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-        else if(requestCode==startActivity.BRUSH.ordinal()){
-            if(resultCode==RESULT_OK){
-                if(data.hasExtra("thickness")){
-                    thickness = data.getIntExtra("thickness",1);
-                    pov.listOfObjects.setCurrentThickness(thickness);
-                }
-                if(data.hasExtra("brushType")){
-                    brushType = data.getIntExtra("brushType",1);
-                    pov.listOfObjects.setBrushType(brushType);
-                }
-            }
-        }
-    }
     private void setBrushType(Dialog dialog,int brush)
     {
         brushType = brush;
