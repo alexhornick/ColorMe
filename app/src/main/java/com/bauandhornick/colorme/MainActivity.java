@@ -29,10 +29,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     int myColor=0;
     int myColorOverlay=0;
+    int myBackground = 0;
     int thickness=0;
     int brushType=0;
     PaintObjectView pov;
-    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon, R.id.color_filter};
+    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon,R.id.undo, R.id.color_filter, R.id.fill_background,R.id.clear};
     boolean display=false;
     boolean eraserMode = false;
     int pastSelected=0;
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 eraserMode = true;
             }
         }
-        else if(v.getId()==R.id.brush_imageView){
+        else if (v.getId()==R.id.brush_imageView){
             final Dialog dialog = new Dialog(MainActivity.this);
 
             dialog.setContentView(R.layout.activity_brush_option);
@@ -192,6 +193,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+        else if(v.getId() == R.id.fill_background)
+        {
+            Dialog dialog = new Dialog(MainActivity.this);
+            dialog.setContentView(R.layout.activity_color_pick);
+
+            final ColorWheel cwo = (ColorWheel) dialog.findViewById(R.id.colorView);
+            TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
+            ImageView im = (ImageView) dialog.findViewById(R.id.example);
+            cwo.setOutput(tv, im);
+
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    myBackground = cwo.myColor;
+                    pov.setBackground(myBackground);
+                    pov.invalidate();
+                }
+            });
+
+            dialog.show();
+
+        }
         else if(v.getId()==R.id.color_filter) {
             Dialog dialog = new Dialog(MainActivity.this);
             dialog.setContentView(R.layout.activity_color_filter);
@@ -211,6 +234,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             dialog.show();
 
+        }
+
+        else if (v.getId() == R.id.clear)
+        {
+            pov.clear();
+        }
+
+        else if(v.getId() == R.id.undo)
+        {
+            pov.undo();
         }
     }
     @Override
@@ -245,9 +278,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(id==R.id.action_about)
         {
-            Dialog dialog = new Dialog(MainActivity.this);
-            dialog.setContentView(R.layout.activity_about);
-            dialog.show();
+            Intent intent = new Intent(this,AboutActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

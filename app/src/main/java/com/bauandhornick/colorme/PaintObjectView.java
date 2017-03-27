@@ -28,11 +28,10 @@ public class PaintObjectView extends View implements View.OnTouchListener{
     ObjectsDrawn listOfObjects;
 
     Paint color;
-    PorterDuffColorFilter filter;
-    PorterDuffColorFilter linefilter;
-    PorterDuffColorFilter pathfilter;
-    final PorterDuff.Mode mode = PorterDuff.Mode.DARKEN;
+    Paint backgroundColor;
+
     int colorOverlay;
+    int background = 0xffffffff;
 
 
     public PaintObjectView(Context context) {
@@ -49,7 +48,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         super(context, attrs, defStyleAttr);
         setup();
     }
-   
+
     private void setup() {
 
         color = new Paint();
@@ -59,6 +58,9 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         color.setStyle(Paint.Style.STROKE);
         color.setStrokeJoin(Paint.Join.ROUND);
         color.setStrokeCap(Paint.Cap.ROUND);
+
+        backgroundColor = new Paint();
+        backgroundColor.setStyle(Paint.Style.FILL);
     }
 
     @Override
@@ -71,10 +73,12 @@ public class PaintObjectView extends View implements View.OnTouchListener{
 
         Integer temp;
         color.setStyle(Paint.Style.FILL);
-        filter = new PorterDuffColorFilter(colorOverlay, mode);
+        backgroundColor.setColor(background);
+        canvas.drawPaint(backgroundColor);
+        /*filter = new PorterDuffColorFilter(colorOverlay, mode);
         linefilter = new PorterDuffColorFilter(colorOverlay, PorterDuff.Mode.DST_ATOP);
         pathfilter = new PorterDuffColorFilter(colorOverlay, PorterDuff.Mode.SRC_ATOP);
-        color.setColorFilter(filter);
+        color.setColorFilter(filter);*/
 
         for(int i=0;i<listOfObjects.getRectangles().size();i++){
 
@@ -91,10 +95,9 @@ public class PaintObjectView extends View implements View.OnTouchListener{
          color.setColor(listOfObjects.getColors()[1].get(i));
             temp = (Integer)listOfObjects.getThickness()[1].get(i);
 
-         color.setColorFilter(linefilter);
-         color.setAlpha(150);
+
          temp = (Integer) listOfObjects.getThickness()[1].get(i);
-       
+
          strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,temp,dm);
          color.setStrokeWidth(strokeWidth);
             canvas.drawLine(listOfObjects.getLines().get(i).getX()[0],listOfObjects.getLines().get(i).getY()[0],
@@ -104,8 +107,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
          temp = (Integer) listOfObjects.getThickness()[2].get(i);
          color.setColor(listOfObjects.getColors()[2].get(i));
 
-         color.setColorFilter(pathfilter);
-         color.setAlpha(150);
+
             temp = (Integer)listOfObjects.getThickness()[2].get(i);
 
             strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,temp,dm);
@@ -238,5 +240,14 @@ public class PaintObjectView extends View implements View.OnTouchListener{
     }
 
     public void setColorOverlay(int colorOverlay) { this.colorOverlay = colorOverlay; }
+    public void setBackground(int background) { this.background = background; }
+    public void clear(){
+
+    }
+    public void undo(){
+
+    }
+
+
 }
 

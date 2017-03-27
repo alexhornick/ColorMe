@@ -26,12 +26,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.bauandhornick.colorme.PaintObjectView
-
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/paint_object_view" />
-
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,15 +39,23 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
+    <com.bauandhornick.colorme.PaintObjectView
+
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/paint_object_view"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
     <ImageView
-        app:srcCompat="@drawable/paintbrush"
+        app:srcCompat="@drawable/paintbrushicon"
         android:id="@+id/brush_imageView"
         android:layout_above="@+id/floatingActionButton"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="31dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/brushicon" />
+        android:src="@drawable/paintbrushicon" />
 
     <ImageView
         android:layout_width="50dp"
@@ -65,22 +67,49 @@
         android:layout_alignParentEnd="true" />
 
     <ImageView
-        app:srcCompat="@drawable/palette"
+        app:srcCompat="@drawable/colorwheelicon"
         android:id="@+id/colorWheel_imageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="81dp"
-        android:src="@drawable/colorfab"
+        android:src="@drawable/colorwheelicon"
         android:layout_above="@+id/brush_imageView"
         android:layout_alignParentEnd="true" />
 
     <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/paintbucket"
+        android:id="@+id/fill_background"
+        android:layout_above="@+id/colorWheel_imageView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="19dp" />
+
+    <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
+        app:srcCompat="@drawable/undo"
+        android:layout_marginBottom="19dp"
+        android:id="@+id/undo"
+        android:layout_above="@+id/fill_background"
+        android:layout_alignStart="@+id/fill_background" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/clear"
+        android:id="@+id/clear"
+        android:layout_marginBottom="32dp"
+        android:layout_above="@+id/undo"
+        android:layout_alignStart="@+id/undo" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         app:srcCompat="@drawable/color_filter_icon"
         android:id="@+id/color_filter"
+        android:layout_marginBottom="16dp"
         android:layout_above="@+id/brush_imageView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="16dp" />
+        android:layout_alignStart="@+id/brush_imageView" />
 
 </RelativeLayout>
