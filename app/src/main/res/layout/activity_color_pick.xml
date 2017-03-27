@@ -32,16 +32,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
 -->
-    <com.bauandhornick.colorme.ColorWheel
-        android:id="@+id/colorView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:src="@drawable/colorwheel3"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/title_textView" />
     <TextView
-        android:text="TextView"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/rbg_textView"
@@ -55,7 +46,7 @@
     <ImageView
         android:id="@+id/example"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:src="#000000"
         android:layout_above="@+id/textView5"
         android:layout_below="@+id/colorView"
@@ -71,5 +62,22 @@
         android:textSize="18sp"
         android:textAllCaps="false"
         android:fontFamily="casual" />
+
+    <com.bauandhornick.colorme.ColorWheel
+        android:id="@+id/colorView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/colorwheel3"
+        android:layout_below="@+id/title_textView" />
+
+    <Button
+        android:text="Reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reset"
+        android:fontFamily="casual"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_below="@+id/colorView"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
