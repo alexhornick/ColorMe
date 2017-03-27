@@ -1,11 +1,13 @@
 package com.bauandhornick.colorme;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,11 +15,12 @@ import android.widget.TextView;
  * Created by Thomas on 3/21/2017.
  */
 
-public class ColorWheel extends ImageView  {
+public class ColorWheel extends ImageView implements View.OnClickListener {
 
     int myColor;
     TextView tv;
     ImageView im2;
+    Button b;
 
     public ColorWheel(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -55,15 +58,7 @@ public class ColorWheel extends ImageView  {
 
                             myColor = ((BitmapDrawable) im.getDrawable()).getBitmap().getPixel((int) mappedPoints[0], (int) mappedPoints[1]);
 
-                        String text = "#";
-                        text = text + Integer.toHexString(myColor);
-                        if (text.length() > 2)
-                            text = text.charAt(0) + text.substring(3);
-                        else
-                            text = "#000000";
-                        tv.setText(text);
-
-                        im2.setColorFilter(myColor);
+                        setColorOutput();
                         return true;
                 }
                 return false;
@@ -73,19 +68,34 @@ public class ColorWheel extends ImageView  {
 
 
     }
-public void setOutput(TextView tv,ImageView im,int color){
+public void setOutput(TextView tv, ImageView im, Button b, int color) {
     this.tv = tv;
     this.im2 = im;
-    this.myColor=color;
+    this.b = b;
+    this.myColor = color;
 
-    String text = "#";
-    text = text + Integer.toHexString(myColor);
-    if (text.length() > 2)
-        text = text.charAt(0) + text.substring(3);
-    else
-        text = "#000000";
-    tv.setText(text);
+    setColorOutput();
+    b.setOnClickListener(this);
+}
 
-    im2.setColorFilter(myColor);
-}}
+    public void onClick(View v) {
+        myColor = Color.BLACK;
+        setColorOutput();
+    }
+
+    public void setColorOutput()
+    {
+        String text = "#";
+        text = text + Integer.toHexString(myColor);
+        if (text.length() > 2)
+            text = text.charAt(0) + text.substring(3);
+        else
+            text = "#000000";
+
+        this.tv.setText(text);
+        im2.setColorFilter(myColor);
+    }
+
+
+}
 

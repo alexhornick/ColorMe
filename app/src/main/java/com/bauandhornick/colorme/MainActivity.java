@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -95,7 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final ColorWheel cw = (ColorWheel) dialog.findViewById(R.id.colorView);
             TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
             ImageView im = (ImageView) dialog.findViewById(R.id.example);
-            cw.setOutput(tv, im,myColor);
+            Button b = (Button) dialog.findViewById(R.id.reset);
+            cw.setOutput(tv, im, b, myColor);
 
             tv = (TextView) dialog.findViewById(R.id.title_textView);
             tv.setText("Brush Color");
@@ -205,7 +207,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final ColorWheel cwo = (ColorWheel) dialog.findViewById(R.id.colorView);
             TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
             ImageView im = (ImageView) dialog.findViewById(R.id.example);
-            cwo.setOutput(tv, im, myBackground);
+            Button b = (Button) dialog.findViewById(R.id.reset);
+            cwo.setOutput(tv, im, b, myBackground);
 
             tv = (TextView) dialog.findViewById(R.id.title_textView);
             tv.setText("Background Color");
@@ -229,7 +232,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             final ColorWheel cwo = (ColorWheel) dialog.findViewById(R.id.colorView);
             TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
             ImageView im = (ImageView) dialog.findViewById(R.id.example);
-            cwo.setOutput(tv, im,myColor);
+            Button b = (Button) dialog.findViewById(R.id.reset);
+            cwo.setOutput(tv, im, b, myColorOverlay);
             tv = (TextView) dialog.findViewById(R.id.title_textView);
             tv.setText("Color filter");
 
