@@ -1,39 +1,32 @@
 package com.bauandhornick.colorme;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     int myColor= Color.BLACK;
     int myColorOverlay=0;
+
+    int myBackground = Color.WHITE;
     int thickness=4;
     int brushType=2;
+
     PaintObjectView pov;
-    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon, R.id.color_filter};
+    int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon,R.id.clear, R.id.color_filter, R.id.fill_background, R.id.undo};
     boolean display=false;
     boolean eraserMode = false;
     int pastSelected=0;
@@ -130,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 pov.listOfObjects.drawMode= ObjectsDrawn.Mode.ERASING;
             }
         }
-        else if(v.getId()==R.id.brush_imageView){
+        else if (v.getId()==R.id.brush_imageView){
             final Dialog dialog = new Dialog(MainActivity.this);
 
             dialog.setContentView(R.layout.activity_brush_option);
@@ -201,6 +194,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+        else if(v.getId() == R.id.fill_background)
+        {
+            Dialog dialog = new Dialog(MainActivity.this);
+            dialog.setContentView(R.layout.activity_color_pick);
+
+            final ColorWheel cwo = (ColorWheel) dialog.findViewById(R.id.colorView);
+            TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
+            ImageView im = (ImageView) dialog.findViewById(R.id.example);
+            cwo.setOutput(tv, im);
+
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    myBackground = cwo.myColor;
+                    pov.setBackground(myBackground);
+                    pov.invalidate();
+                }
+            });
+
+            dialog.show();
+
+        }
         else if(v.getId()==R.id.color_filter) {
             Dialog dialog = new Dialog(MainActivity.this);
             dialog.setContentView(R.layout.activity_color_pick);
@@ -223,6 +238,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             dialog.show();
 
+        }
+
+        else if (v.getId() == R.id.clear)
+        {
+            pov.clear();
+        }
+
+        else if(v.getId() == R.id.undo)
+        {
+            pov.undo();
         }
     }
     @Override
@@ -257,9 +282,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(id==R.id.action_about)
         {
-            Dialog dialog = new Dialog(MainActivity.this);
-            dialog.setContentView(R.layout.activity_about);
-            dialog.show();
+            Intent intent = new Intent(this,AboutActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

@@ -28,7 +28,9 @@ public class PaintObjectView extends View implements View.OnTouchListener{
     ObjectsDrawn listOfObjects;
 
     Paint color;
+    
     int colorOverlay;
+    int background = 0xffffffff;
 
     DisplayMetrics dm;
     float strokeWidth;
@@ -48,7 +50,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         super(context, attrs, defStyleAttr);
         setup();
     }
-   
+
     private void setup() {
 
         color = new Paint();
@@ -67,11 +69,11 @@ public class PaintObjectView extends View implements View.OnTouchListener{
     protected void onDraw(Canvas canvas) {
 
         super.onDraw(canvas);
-        color.setColor(0xffffffff);
+        color.setColor(background);
         color.setStyle(Paint.Style.FILL);
         canvas.drawPaint(color);
-
-       int j=0,k=0,l=0,m=0;
+       
+        int j=0,k=0,l=0,m=0;
 
         for(int i=0;i<listOfObjects.getPastActions().size();i++){
 
@@ -94,7 +96,6 @@ public class PaintObjectView extends View implements View.OnTouchListener{
                 m++;
                 }
             }
-
     }
 
     private void setColorandThickness(String index,int i){
@@ -116,9 +117,9 @@ public class PaintObjectView extends View implements View.OnTouchListener{
             temp = (Integer) listOfObjects.getThickness()[3].get(i);
             color.setColor(0xffffffff);
         }
+
         strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,temp,dm);
         color.setStrokeWidth(strokeWidth);
-
     }
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -286,5 +287,14 @@ public class PaintObjectView extends View implements View.OnTouchListener{
     }
 
     public void setColorOverlay(int colorOverlay) { this.colorOverlay = colorOverlay; }
+    public void setBackground(int background) { this.background = background; }
+    public void clear(){
+
+    }
+    public void undo(){
+
+    }
+
+
 }
 
