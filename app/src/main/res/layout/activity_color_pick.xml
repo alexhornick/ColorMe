@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.bauandhornick.colorme.ColorPickActivity">
+   >
 
     <TextView
         android:text="RGB:          "
@@ -71,13 +71,14 @@
         android:layout_below="@+id/title_textView" />
 
     <Button
-        android:text="Reset"
+        android:text="Black/White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/reset"
         android:fontFamily="casual"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_below="@+id/colorView"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textAllCaps="false" />
 
 </RelativeLayout>

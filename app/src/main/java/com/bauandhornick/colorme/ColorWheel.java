@@ -37,7 +37,7 @@ public class ColorWheel extends ImageView implements View.OnClickListener {
         setUp();}
 
     public void setUp(){
-        final ImageView im = (ImageView) this;
+        final ImageView im = this;
         im.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -64,22 +64,25 @@ public class ColorWheel extends ImageView implements View.OnClickListener {
                 return false;
             }
 
-       });
+        });
 
 
     }
-public void setOutput(TextView tv, ImageView im, Button b, int color) {
-    this.tv = tv;
-    this.im2 = im;
-    this.b = b;
-    this.myColor = color;
+    public void setOutput(TextView tv, ImageView im, Button b, int color) {
+        this.tv = tv;
+        this.im2 = im;
+        this.b = b;
+        this.myColor = color;
 
-    setColorOutput();
-    b.setOnClickListener(this);
-}
+        setColorOutput();
+        b.setOnClickListener(this);
+    }
 
     public void onClick(View v) {
-        myColor = Color.BLACK;
+        if(myColor==Color.BLACK)
+            myColor = Color.WHITE;
+        else
+            myColor=Color.BLACK;
         setColorOutput();
     }
 
@@ -87,6 +90,7 @@ public void setOutput(TextView tv, ImageView im, Button b, int color) {
     {
         String text = "#";
         text = text + Integer.toHexString(myColor);
+
         if (text.length() > 2)
             text = text.charAt(0) + text.substring(3);
         else
