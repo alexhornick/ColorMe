@@ -46,6 +46,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         setup();
     }
 
+    //Setup canvas
     private void setup() {
 
         color = new Paint();
@@ -66,10 +67,12 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         super.onDraw(canvas);
         color.setColor(background);
         color.setStyle(Paint.Style.FILL);
-        canvas.drawPaint(color);
+        canvas.drawPaint(color); //Draw background color
 
+        //Initialize 4 index variables
         int j=0,k=0,l=0,m=0;
 
+        //Draw all objects onto canvas.
         for(int i=0;i<listOfObjects.getPastActions().size();i++){
 
             if(listOfObjects.getPastActions().get(i).equals("0")){
@@ -99,9 +102,10 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         else
             color.setStyle(Paint.Style.STROKE);
 
+        //sets color and color filter if applicable
         if(index.equals("0")) {
             temp = (Integer) listOfObjects.getThickness()[0].get(i);
-            color.setColor(listOfObjects.getColors()[0].get(i)|colorOverlay);
+            color.setColor(listOfObjects.getColors()[0].get(i)|colorOverlay); //uses bitwise operation for color filter
         }else if(index.equals("1")) {
             temp = (Integer) listOfObjects.getThickness()[1].get(i);
             color.setColor(listOfObjects.getColors()[1].get(i)|colorOverlay);
@@ -116,6 +120,8 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,temp,dm);
         color.setStrokeWidth(strokeWidth);
     }
+
+    /*This function manages all Touch events*/
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch(event.getAction()) {
@@ -180,24 +186,27 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         }
 
     }
+
+    /*On Move event, track ending point and draw a new object each time */
     private void onMove(MotionEvent event){
         listOfObjects.setEndingPoint(0,(int)event.getX());
         listOfObjects.setEndingPoint(1,(int)event.getY());
 
         if(listOfObjects.drawMode== ObjectsDrawn.Mode.DRAWING){
-            if (listOfObjects.getBrushType() == 0) {
+            if (listOfObjects.getBrushType() == 0) { //when brush type is a rectangle
 
                 List<Rect> myRectangles = listOfObjects.getRectangles();
                 myRectangles.remove(listOfObjects.getRectangles().size()-1);
 
                 listOfObjects.getColors()[0].remove(listOfObjects.getColors()[0].size()-1);
                 listOfObjects.getThickness()[0].remove(listOfObjects.getThickness()[0].size()-1);
-                checkRect(event);
+                checkRect(event);  //will add rectangle object to the list.
 
+                //Remove last pastAction, replace it with current one.
                 listOfObjects.getPastActions().remove(listOfObjects.getPastActions().size()-1);
                 listOfObjects.getPastActions().add("0");
             }
-            else if(listOfObjects.getBrushType()==1){
+            else if(listOfObjects.getBrushType()==1){ //when brush type is a line
 
                 listOfObjects.tempLine.set(listOfObjects.getStartingPoint(0),listOfObjects.getStartingPoint(1),
                         event.getX(),event.getY());
@@ -205,18 +214,20 @@ public class PaintObjectView extends View implements View.OnTouchListener{
                 myLine.remove(myLine.size()-1);
                 myLine.add(listOfObjects.tempLine);
 
+                //remove prior color/thickness to be replaced
                 listOfObjects.getColors()[1].remove(listOfObjects.getColors()[1].size()-1);
                 listOfObjects.getThickness()[1].remove(listOfObjects.getThickness()[1].size()-1);
 
+                //Add current color/thickness
                 listOfObjects.getColors()[1].add(listOfObjects.getCurrentColor());
                 listOfObjects.getThickness()[1].add(listOfObjects.getCurrentThickness());
 
-
+                //Remove previous line and add current one
                 listOfObjects.getPastActions().remove(listOfObjects.getPastActions().size()-1);
                 listOfObjects.getPastActions().add("1");
             }
 
-            else if(listOfObjects.getBrushType()==2){
+            else if(listOfObjects.getBrushType()==2){ //when brush type is freestyle
                 listOfObjects.tempPath.lineTo(listOfObjects.getEndingPoint(0),listOfObjects.getEndingPoint(1));
                 List<Path> myPath = listOfObjects.getPath();
                 myPath.remove(myPath.size()-1);
@@ -231,7 +242,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
                 listOfObjects.getPastActions().remove(listOfObjects.getPastActions().size()-1);
                 listOfObjects.getPastActions().add("2");
             }}
-        else
+        else //when eraser Mode is on.
         {
             listOfObjects.tempErasePath.lineTo(listOfObjects.getEndingPoint(0),listOfObjects.getEndingPoint(1));
             List<Path> myPath = listOfObjects.getErasePaths();
@@ -241,9 +252,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
 
             listOfObjects.getPastActions().remove(listOfObjects.getPastActions().size()-1);
             listOfObjects.getPastActions().add("3");
-
             listOfObjects.getThickness()[3].remove(listOfObjects.getThickness()[3].size()-1);
-
             listOfObjects.getThickness()[3].add(listOfObjects.getCurrentThickness());
         }
         invalidate();
@@ -282,27 +291,32 @@ public class PaintObjectView extends View implements View.OnTouchListener{
 
     public void setColorOverlay(int colorOverlay) { this.colorOverlay = colorOverlay; }
     public void setBackground(int background) { this.background = background; }
+
+    /*This function resets and clears every object on the canvas*/
     public void clear(){
-        background = Color.WHITE;
+        background = Color.WHITE; //set background to white
         listOfObjects.getLines().clear();
         listOfObjects.getRectangles().clear();
         listOfObjects.getPath().clear();
         listOfObjects.getErasePaths().clear();
         listOfObjects.getPastActions().clear();
 
+        //Remove thickness and colors list
         for(int i=0;i<4;i++)
             listOfObjects.getThickness()[i].clear();
 
         for(int i=0;i<3;i++)
             listOfObjects.getColors()[i].clear();
 
-        invalidate();
+        invalidate(); //redraw the now-cleared canvas
     }
     public void undo(){
         int size = listOfObjects.getPastActions().size();
 
         //Make sure to not call undo when canvas is empty.
         if(size > 0) {
+
+            //pastAction can be 0 (Rectangle), 1(Line), 2(Path), or 3(Erase path)
             String pastAction = listOfObjects.getPastActions().get(size - 1);
 
             if (pastAction.equals("0")) {
@@ -324,8 +338,9 @@ public class PaintObjectView extends View implements View.OnTouchListener{
                 listOfObjects.getErasePaths().remove(listOfObjects.getErasePaths().size() - 1);
             }
 
+            //Remove latest past action
             listOfObjects.getPastActions().remove(listOfObjects.getPastActions().size() - 1);
-            invalidate();
+            invalidate(); //redraw canvas
         }
 
     }

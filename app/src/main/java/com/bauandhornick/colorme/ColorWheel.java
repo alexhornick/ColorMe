@@ -20,7 +20,7 @@ public class ColorWheel extends ImageView implements View.OnClickListener {
     int myColor;
     TextView tv;
     ImageView im2;
-    Button b;
+    Button b; //reset button
 
     public ColorWheel(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -38,6 +38,8 @@ public class ColorWheel extends ImageView implements View.OnClickListener {
 
     public void setUp(){
         final ImageView im = this;
+
+        /*This code allows the user to select the color. It will get the color of the pixel the user selected*/
         im.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -68,6 +70,8 @@ public class ColorWheel extends ImageView implements View.OnClickListener {
 
 
     }
+
+    //Set variables and output such as the color, hex value, etc.
     public void setOutput(TextView tv, ImageView im, Button b, int color) {
         this.tv = tv;
         this.im2 = im;
@@ -78,6 +82,7 @@ public class ColorWheel extends ImageView implements View.OnClickListener {
         b.setOnClickListener(this);
     }
 
+    //Used for reset button
     public void onClick(View v) {
         if(myColor==Color.BLACK)
             myColor = Color.WHITE;
@@ -86,6 +91,7 @@ public class ColorWheel extends ImageView implements View.OnClickListener {
         setColorOutput();
     }
 
+    //Display hex of color selected, and changes color of image view.
     public void setColorOutput()
     {
         String text = "#";
