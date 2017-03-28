@@ -2,6 +2,8 @@ package com.bauandhornick.colorme;
 
 import android.graphics.Path;
 import android.graphics.Rect;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,16 +124,7 @@ public class ObjectsDrawn {
         this.startingPoint[index] = value;
     }
 
-    public int getEndingPoint(int index) {
-        return endingPoint[index];
-    }
-
-    public void setEndingPoint(int index, int value) {
-        this.endingPoint[index] = value;
-    }
-
     private int [] startingPoint;
-    private int [] endingPoint;
     private int [] tempEndingPoint;
 
     public ObjectsDrawn() {
@@ -139,7 +132,6 @@ public class ObjectsDrawn {
         lines = new ArrayList<>();
         paths = new ArrayList<>();
         startingPoint = new int[2];
-        endingPoint = new int[2];
         tempEndingPoint = new int[2];
 
         colors = new List[3];

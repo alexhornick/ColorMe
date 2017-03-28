@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pov.listOfObjects.setCurrentThickness(thickness);
         pov.listOfObjects.setBrushType(brushType);
 
+
         //Set images on sidebar to be invisible by default
         ImageView temp;
         for(int images:imageList){
@@ -372,4 +373,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             im.setColorFilter(0xff000000);}
         pastSelected=brush;
     }
+
 }
