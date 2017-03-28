@@ -79,28 +79,33 @@ Eraser:
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //Set default brush, background and color filter colors.
     int myColor= Color.BLACK;
     int myColorOverlay=0;
-
     int myBackground = Color.WHITE;
+
+    //Default thickness of line, default brush is 2/freestyle.
     int thickness=4;
     int brushType=2;
 
     PaintObjectView pov;
     final int [] imageList={R.id.colorWheel_imageView,R.id.brush_imageView, R.id.eraserIcon,R.id.clear, R.id.color_filter, R.id.fill_background, R.id.undo};
     boolean display=false;
-    boolean eraserMode = false;
+    boolean eraserMode = false; //If user is in draw vs. erase mode
     int pastSelected=0;
     protected final int[] brushList = {R.id.rectangle,R.id.line,R.id.paintbrush};
 
     enum startActivity{COLOR,BRUSH}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //Remove status bar.
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setLogo(R.drawable.logo);
+        toolbar.setLogo(R.drawable.logo); //set logo for toolbar
         toolbar.setPadding(0, 20, 0, 30); //set top, bottom padding for toolbar
         setSupportActionBar(toolbar);
 
@@ -110,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pov.listOfObjects.setCurrentThickness(thickness);
         pov.listOfObjects.setBrushType(brushType);
 
+        //Set images on sidebar to be invisible by default
         ImageView temp;
         for(int images:imageList){
             temp = (ImageView) findViewById(images);
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             temp.setOnClickListener(MainActivity.this);
         }
 
+        //FloatingActionButton will toggle the visibility of the sidebar images
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
 
@@ -144,12 +151,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }});
     }
 
+    /* onClick handles clicks on all the sidebar images */
     @Override
     public void onClick(View v) {
 
-        if(v.getId()==R.id.colorWheel_imageView) {
-            Dialog dialog = new Dialog(MainActivity.this);
+        if(v.getId()==R.id.colorWheel_imageView) { //When user selects color wheel to select paint color.
 
+            //Create dialog box, get Image & Text View from box.
+            Dialog dialog = new Dialog(MainActivity.this);
             dialog.setContentView(R.layout.activity_color_pick);
             final ColorWheel cw = (ColorWheel) dialog.findViewById(R.id.colorView);
             TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
@@ -157,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Button b = (Button) dialog.findViewById(R.id.reset);
             cw.setOutput(tv, im, b, myColor);
 
+            //Set title of dialog to Brush Color
             tv = (TextView) dialog.findViewById(R.id.title_textView);
             tv.setText("Brush Color");
 
@@ -170,10 +180,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             dialog.show();
         }
-        else if(v.getId() == R.id.eraserIcon)
+        else if(v.getId() == R.id.eraserIcon) //Toggle eraser mode
         {
             ImageView im = (ImageView) findViewById(R.id.eraserIcon);
 
+            //switch image resource to on or off
             if(eraserMode) {
                 im.setImageResource(R.drawable.eraser_off);
                 eraserMode = false;
@@ -182,19 +193,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else {
                 im.setImageResource(R.drawable.eraser_on);
                 eraserMode = true;
-
                 pov.listOfObjects.drawMode= ObjectsDrawn.Mode.ERASING;
             }
         }
-        else if (v.getId()==R.id.brush_imageView){
-            final Dialog dialog = new Dialog(MainActivity.this);
+        else if (v.getId()==R.id.brush_imageView){ //Brush options (line, rectangle, freestyle, thickness)
 
-            dialog.setContentView(R.layout.activity_brush_option);
+            final Dialog dialog = new Dialog(MainActivity.this); //create new Dialog box
+            dialog.setContentView(R.layout.activity_brush_option); //set layout to the dialog box
 
             SeekBar seek = (SeekBar) dialog.findViewById(R.id.seekBar);
             seek.setMax(20);
 
-            seek.setProgress(thickness);
+            seek.setProgress(thickness); //set thickness, taken from the seekbar
             seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
                 @Override
@@ -214,6 +224,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
 
+
+            /*Set OnClick listeners for the three Brush options, and set Brush type accordingly*/
             ImageView im = (ImageView) dialog.findViewById(R.id.line);
             im.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -222,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
 
-            im.setColorFilter(0xff000000);
+            im.setColorFilter(0xff000000); //reset color filter to 000, which is black (non-selected)
 
             im = (ImageView) dialog.findViewById(R.id.rectangle);
             im.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     setBrushType(dialog, 0);
                 }
             });
-            im.setColorFilter(0xff000000);
+            im.setColorFilter(0xff000000); //reset color filter to 000, which is black (non-selected)
 
             im = (ImageView) dialog.findViewById(R.id.paintbrush);
             im.setOnClickListener(new View.OnClickListener() {
@@ -240,11 +252,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     setBrushType(dialog,2);
                 }
             });
-            im.setColorFilter(0xff000000);
-
-
+            im.setColorFilter(0xff000000); //reset color filter to 000, which is black (non-selected)
             setBrushType(dialog,brushType);
 
+            //When user exits dialog, set BrushType and Thickness in the listOfObject in the POV class.
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
@@ -256,36 +267,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-        else if(v.getId() == R.id.fill_background)
+        else if(v.getId() == R.id.fill_background) //when user selects the fill background icon (paint bucket)
         {
+            //Create new Dialog box with the color pick activity
             Dialog dialog = new Dialog(MainActivity.this);
             dialog.setContentView(R.layout.activity_color_pick);
 
+            //Create ColorWheel object to get value user selected.
             final ColorWheel cwo = (ColorWheel) dialog.findViewById(R.id.colorView);
             TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
             ImageView im = (ImageView) dialog.findViewById(R.id.example);
             Button b = (Button) dialog.findViewById(R.id.reset);
             cwo.setOutput(tv, im, b, myBackground);
 
+            //Set title of the dialog box so user knows what the color is for.
             tv = (TextView) dialog.findViewById(R.id.title_textView);
             tv.setText("Background Color");
 
+            //When user exits the dialog box.
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     myBackground = cwo.myColor;
-                    pov.setBackground(myBackground);
-                    pov.invalidate();
+                    pov.setBackground(myBackground); //set background color in POV class
+                    pov.invalidate(); //redraw canvas with new background
                 }
             });
 
             dialog.show();
 
         }
-        else if(v.getId()==R.id.color_filter) {
+        else if(v.getId()==R.id.color_filter) { //Color filter selected from sidebar
+
+            //Create new dialog box
             Dialog dialog = new Dialog(MainActivity.this);
             dialog.setContentView(R.layout.activity_color_pick);
 
+            //Create ColorWheel object to get color selected
             final ColorWheel cwo = (ColorWheel) dialog.findViewById(R.id.colorView);
             TextView tv = (TextView) dialog.findViewById(R.id.rbg_textView);
             ImageView im = (ImageView) dialog.findViewById(R.id.example);
@@ -294,12 +312,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             tv = (TextView) dialog.findViewById(R.id.title_textView);
             tv.setText("Color filter");
 
+            //When user exits the dialog
             dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     myColorOverlay = cwo.myColor;
                     pov.setColorOverlay(myColorOverlay);
-                    pov.invalidate();
+                    pov.invalidate(); //redraw canvas with filter overlay
                 }
             });
 
@@ -307,11 +326,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+        //Clears canvas
         else if (v.getId() == R.id.clear)
         {
             pov.clear();
         }
 
+        //Undoes last action
         else if(v.getId() == R.id.undo)
         {
             pov.undo();
@@ -339,6 +360,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    //Sets brushType and changes the ImageView by applying a filter over to show it's selected.
     private void setBrushType(Dialog dialog,int brush)
     {
         brushType = brush;
