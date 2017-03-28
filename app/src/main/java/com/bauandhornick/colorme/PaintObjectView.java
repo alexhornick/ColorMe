@@ -126,10 +126,10 @@ public class PaintObjectView extends View implements View.OnTouchListener{
     public boolean onTouch(View v, MotionEvent event) {
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                onDown(event);
+                onDown(event.getX(),event.getY());
                 return true;
             case MotionEvent.ACTION_MOVE:
-                onMove(event);
+                onMove(event.getX(),event.getY());
                 return true;
             case MotionEvent.ACTION_UP:
 
@@ -137,24 +137,21 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         } return false;
 
     }
-    private void onDown(MotionEvent event){
-        listOfObjects.setStartingPoint(0,(int)event.getX());
-        listOfObjects.setStartingPoint(1,(int)event.getY());
-
-        listOfObjects.setEndingPoint(0,(int)event.getX());
-        listOfObjects.setEndingPoint(1,(int)event.getY());
+    private void onDown(float x,float y){
+        listOfObjects.setStartingPoint(0,(int)x);
+        listOfObjects.setStartingPoint(1,(int)y);
 
         if(listOfObjects.drawMode== ObjectsDrawn.Mode.DRAWING){
             if(listOfObjects.getBrushType()==0) {
                 listOfObjects.tempRect=new Rect();
-                checkRect(event);
+                checkRect(x,y);
                 listOfObjects.getPastActions().add("0");
             }
 
             else if(listOfObjects.getBrushType()==1) {
                 listOfObjects.tempLine=new Line();
                 listOfObjects.tempLine.set(listOfObjects.getStartingPoint(0),listOfObjects.getStartingPoint(1),
-                        event.getX(),event.getY());
+                        (int)x,(int)y);
                 List<Line> myLine = listOfObjects.getLines();
                 myLine.add(listOfObjects.tempLine);
                 listOfObjects.getColors()[1].add(listOfObjects.getCurrentColor());
@@ -188,9 +185,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
     }
 
     /*On Move event, track ending point and draw a new object each time */
-    private void onMove(MotionEvent event){
-        listOfObjects.setEndingPoint(0,(int)event.getX());
-        listOfObjects.setEndingPoint(1,(int)event.getY());
+    private void onMove(float x, float y){
 
         if(listOfObjects.drawMode== ObjectsDrawn.Mode.DRAWING){
             if (listOfObjects.getBrushType() == 0) { //when brush type is a rectangle
@@ -200,7 +195,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
 
                 listOfObjects.getColors()[0].remove(listOfObjects.getColors()[0].size()-1);
                 listOfObjects.getThickness()[0].remove(listOfObjects.getThickness()[0].size()-1);
-                checkRect(event);  //will add rectangle object to the list.
+                checkRect(x,y);  //will add rectangle object to the list.
 
                 //Remove last pastAction, replace it with current one.
                 listOfObjects.getPastActions().remove(listOfObjects.getPastActions().size()-1);
@@ -209,7 +204,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
             else if(listOfObjects.getBrushType()==1){ //when brush type is a line
 
                 listOfObjects.tempLine.set(listOfObjects.getStartingPoint(0),listOfObjects.getStartingPoint(1),
-                        event.getX(),event.getY());
+                        x,y);
                 List<Line> myLine = listOfObjects.getLines();
                 myLine.remove(myLine.size()-1);
                 myLine.add(listOfObjects.tempLine);
@@ -228,7 +223,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
             }
 
             else if(listOfObjects.getBrushType()==2){ //when brush type is freestyle
-                listOfObjects.tempPath.lineTo(listOfObjects.getEndingPoint(0),listOfObjects.getEndingPoint(1));
+                listOfObjects.tempPath.lineTo(x,y);
                 List<Path> myPath = listOfObjects.getPath();
                 myPath.remove(myPath.size()-1);
                 listOfObjects.getColors()[2].remove(listOfObjects.getColors()[2].size()-1);
@@ -244,7 +239,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
             }}
         else //when eraser Mode is on.
         {
-            listOfObjects.tempErasePath.lineTo(listOfObjects.getEndingPoint(0),listOfObjects.getEndingPoint(1));
+            listOfObjects.tempErasePath.lineTo(x,y);
             List<Path> myPath = listOfObjects.getErasePaths();
             myPath.remove(myPath.size()-1);
 
@@ -258,30 +253,30 @@ public class PaintObjectView extends View implements View.OnTouchListener{
         invalidate();
     }
 
-    private void checkRect(MotionEvent event){
+    private void checkRect(float x,float y){
 
         List<Rect> myRectangles = listOfObjects.getRectangles();
 
-        if (listOfObjects.getStartingPoint(0) < listOfObjects.getEndingPoint(0) &&
-                listOfObjects.getStartingPoint(1) < listOfObjects.getEndingPoint(1)) {
+        if (listOfObjects.getStartingPoint(0) < x &&
+                listOfObjects.getStartingPoint(1) < y) {
             listOfObjects.tempRect.set(listOfObjects.getStartingPoint(0), listOfObjects.getStartingPoint(1),
-                    listOfObjects.getEndingPoint(0), listOfObjects.getEndingPoint(1));
+                    (int)x, (int)y);
 
             myRectangles.add(listOfObjects.tempRect);
-        } else if (listOfObjects.getStartingPoint(0) > listOfObjects.getEndingPoint(0) &&
-                listOfObjects.getStartingPoint(1) < listOfObjects.getEndingPoint(1)) {
-            listOfObjects.tempRect.set(listOfObjects.getEndingPoint(0), listOfObjects.getStartingPoint(1),
-                    listOfObjects.getStartingPoint(0), listOfObjects.getEndingPoint(1));
+        } else if (listOfObjects.getStartingPoint(0) > x &&
+                listOfObjects.getStartingPoint(1) < y) {
+            listOfObjects.tempRect.set((int)x, listOfObjects.getStartingPoint(1),
+                    listOfObjects.getStartingPoint(0), (int)y);
 
             myRectangles.add(listOfObjects.tempRect);
-        } else if (listOfObjects.getStartingPoint(0) < listOfObjects.getEndingPoint(0) &&
-                listOfObjects.getStartingPoint(1) > listOfObjects.getEndingPoint(1)) {
-            listOfObjects.tempRect.set(listOfObjects.getStartingPoint(0), listOfObjects.getEndingPoint(1),
-                    listOfObjects.getEndingPoint(0), listOfObjects.getStartingPoint(1));
+        } else if (listOfObjects.getStartingPoint(0) < x &&
+                listOfObjects.getStartingPoint(1) > y) {
+            listOfObjects.tempRect.set(listOfObjects.getStartingPoint(0), (int)y,
+                    (int)x, listOfObjects.getStartingPoint(1));
 
             myRectangles.add(listOfObjects.tempRect);
         } else {
-            listOfObjects.tempRect.set(listOfObjects.getEndingPoint(0), listOfObjects.getEndingPoint(1),
+            listOfObjects.tempRect.set((int)x, (int)y,
                     listOfObjects.getStartingPoint(0), listOfObjects.getStartingPoint(1));
             myRectangles.add(listOfObjects.tempRect);
         }
