@@ -217,7 +217,7 @@ public class PaintObjectView extends View implements View.OnTouchListener{
                 listOfObjects.getColors()[1].add(listOfObjects.getCurrentColor());
                 listOfObjects.getThickness()[1].add(listOfObjects.getCurrentThickness());
 
-                //Remove previous line and add current one
+                //Remove past action and add current one
                 listOfObjects.getPastActions().remove(listOfObjects.getPastActions().size()-1);
                 listOfObjects.getPastActions().add("1");
             }
