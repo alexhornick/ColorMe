@@ -40,6 +40,7 @@ public class ColorWheel extends ImageView implements View.OnClickListener {
         final ImageView im = this;
 
         /*This code allows the user to select the color. It will get the color of the pixel the user selected*/
+        /*Code below inspired by the following StackOverflow question: http://stackoverflow.com/questions/23511682/find-the-pixel-of-bitmap-irrespective-imageview-size-and-scaletype*/
         im.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
