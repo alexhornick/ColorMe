@@ -261,27 +261,24 @@ public class PaintObjectView extends View implements View.OnTouchListener{
                 listOfObjects.getStartingPoint(1) < y) {
             listOfObjects.tempRect.set(listOfObjects.getStartingPoint(0), listOfObjects.getStartingPoint(1),
                     (int)x, (int)y);
-
-            myRectangles.add(listOfObjects.tempRect);
         } else if (listOfObjects.getStartingPoint(0) > x &&
                 listOfObjects.getStartingPoint(1) < y) {
             listOfObjects.tempRect.set((int)x, listOfObjects.getStartingPoint(1),
                     listOfObjects.getStartingPoint(0), (int)y);
 
-            myRectangles.add(listOfObjects.tempRect);
         } else if (listOfObjects.getStartingPoint(0) < x &&
                 listOfObjects.getStartingPoint(1) > y) {
             listOfObjects.tempRect.set(listOfObjects.getStartingPoint(0), (int)y,
                     (int)x, listOfObjects.getStartingPoint(1));
 
-            myRectangles.add(listOfObjects.tempRect);
-        } else {
+          } else {
             listOfObjects.tempRect.set((int)x, (int)y,
                     listOfObjects.getStartingPoint(0), listOfObjects.getStartingPoint(1));
             myRectangles.add(listOfObjects.tempRect);
         }
         listOfObjects.getColors()[0].add(listOfObjects.getCurrentColor());
         listOfObjects.getThickness()[0].add(listOfObjects.getCurrentThickness());
+        myRectangles.add(listOfObjects.tempRect);
     }
 
     public void setColorOverlay(int colorOverlay) { this.colorOverlay = colorOverlay; }
