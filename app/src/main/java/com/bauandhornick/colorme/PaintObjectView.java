@@ -274,7 +274,6 @@ public class PaintObjectView extends View implements View.OnTouchListener{
           } else {
             listOfObjects.tempRect.set((int)x, (int)y,
                     listOfObjects.getStartingPoint(0), listOfObjects.getStartingPoint(1));
-            myRectangles.add(listOfObjects.tempRect);
         }
         listOfObjects.getColors()[0].add(listOfObjects.getCurrentColor());
         listOfObjects.getThickness()[0].add(listOfObjects.getCurrentThickness());
